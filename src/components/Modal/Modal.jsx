@@ -13,10 +13,12 @@ export default class Modal extends Component {
   componentWillUnmount() {
     console.log( 'Модальное окно размонтировано' );
     window.removeEventListener( 'keydown', this.escCloseHandler );
+    
   }
 
   escCloseHandler = (event) =>
   {
+    console.log(event)
     console.log( event.code );
     if ( event.code === 'Escape' )
     {
@@ -26,6 +28,7 @@ export default class Modal extends Component {
 
   backdropClickHandler = (event) =>
   {
+    console.log(event)
     if ( event.target === event.currentTarget )
     {
     this.props.onClose()

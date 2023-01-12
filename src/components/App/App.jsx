@@ -29,7 +29,7 @@ export default class App extends Component {
       prevState.page !== this.state.page
     ) {
       this.setState({ loading: true });
-      const searchResult = setTimeout(() => {
+      setTimeout(() => {
         fetch(
           `${BASE_URL}q=${this.state.request}&key=${API_KEY}&image_type=photo&orientation=horizontal&page=${this.state.page}&per_page=12`
         )
@@ -67,12 +67,14 @@ export default class App extends Component {
 
   showModalHandler = event => {
     this.setState( prevState => ( { showModal: !prevState.showModal } ) );
-    if (event.target.nodeName !== 'IMG') {
-      return;
-    }
-
+    console.log( event.target.nodeName )
+    console.log(event)
+    if ( event.target.nodeName !== 'IMG' )
+    {
+      return      
+    } 
     const imgLink = event.currentTarget.src;
-    this.modalContentHandler(imgLink);
+    this.modalContentHandler(imgLink)    
   };
 
   modalContentHandler = link => {
