@@ -66,15 +66,13 @@ export default class App extends Component {
   };
 
   showModalHandler = event => {
-    this.setState( prevState => ( { showModal: !prevState.showModal } ) );
-    console.log( event.target.nodeName )
-    console.log(event)
-    if ( event.target.nodeName !== 'IMG' )
-    {
-      return      
-    } 
+    this.setState(prevState => ({ showModal: !prevState.showModal }));
+
+    if (event.target.nodeName !== 'IMG') {
+      return;
+    }
     const imgLink = event.currentTarget.src;
-    this.modalContentHandler(imgLink)    
+    this.modalContentHandler(imgLink);
   };
 
   modalContentHandler = link => {
@@ -119,10 +117,14 @@ export default class App extends Component {
         {this.state.gallery.length > 0 && (
           <Button onloadMore={this.loadMoreHandler} />
         )}
-        { this.state.showModal && <Modal onClose={this.showModalHandler}>
-        
-        <img src={this.state.modalContent.src} alt={this.state.modalContent.alt}/>
-        </Modal> }
+        {this.state.showModal && (
+          <Modal onClose={this.showModalHandler}>
+            <img
+              src={this.state.modalContent.src}
+              alt={this.state.modalContent.alt}
+            />
+          </Modal>
+        )}
       </Box>
     );
   }
