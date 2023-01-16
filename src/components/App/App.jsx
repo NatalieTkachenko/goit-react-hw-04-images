@@ -21,6 +21,7 @@ export default class App extends Component {
       src: '',
       alt: '',
     },
+    showLoadMoreButton: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -39,11 +40,16 @@ export default class App extends Component {
             }
             return response.json();
           })
-          .then(data => {
-            console.log(data.hits);
+          .then( data =>
+          {
+            console.log(data)
+            console.log( data.hits );
+            console.log (this.state.page)
             this.setState(prevState => ({
-              gallery: [...prevState.gallery, ...data.hits],
-            }));
+              gallery: [ ...prevState.gallery, ...data.hits ],
+              showLoadMoreButton: this.state.page < Math.ceil(data.totalHits / 12)              
+            } ) );
+            
           })
           .catch(error => {
             console.log('error');
@@ -114,7 +120,7 @@ export default class App extends Component {
             barColor="#3f51b5"
           />
         )}
-        {this.state.gallery.length > 0 && (
+        {this.state.showLoadMoreButton && (
           <Button onloadMore={this.loadMoreHandler} />
         )}
         {this.state.showModal && (
