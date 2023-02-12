@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
@@ -10,42 +10,38 @@ import {
 
 import { ImSearch } from 'react-icons/im';
 
-export default class SearchBar extends Component {
-  state = {
-    query: '',
+export default function SearchBar({ onSubmit }) {
+  const [query, setQuery] = useState('');
+
+  const inputChangeHandler = e => {
+    setQuery(e.target.value.toLowerCase());
   };
 
-  inputChangeHandler = e => {
-    this.setState(prevState => ({ query: e.target.value.toLowerCase() }));
-  };
-
-  submitHandler = e => {
+  const submitHandler = e => {
     e.preventDefault();
-    if (this.state.query.trim() === '') {
+    if (query.trim() === '') {
       toast.warn('Please, type your request!');
       return;
     }
-    this.props.onSubmit(this.state.query);
-    this.setState({ query: '' });
+    onSubmit(query);
+    setQuery('');
   };
 
-  render() {
-    return (
-      <Searchbar>
-        <SearchForm onSubmit={this.submitHandler}>
-          <SearchFormButton type="submit">
-            <ImSearch />
-          </SearchFormButton>
-          <SearchFormInput
-            type="text"
-            autocomplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-            onChange={this.inputChangeHandler}
-            value={this.state.query}
-          ></SearchFormInput>
-        </SearchForm>
-      </Searchbar>
-    );
-  }
+  return (
+    <Searchbar>
+      <SearchForm onSubmit={submitHandler}>
+        <SearchFormButton type="submit">
+          <ImSearch />
+        </SearchFormButton>
+        <SearchFormInput
+          type="text"
+          autocomplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+          onChange={inputChangeHandler}
+          value={query}
+        ></SearchFormInput>
+      </SearchForm>
+    </Searchbar>
+  );
 }

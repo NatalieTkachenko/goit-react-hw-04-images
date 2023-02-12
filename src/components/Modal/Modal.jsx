@@ -1,39 +1,37 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Overlay, ModalContent } from './Modal.styled.jsx';
 
 const modalRoot = document.querySelector('#modal-root');
 
-export default class Modal extends Component {
-  componentDidMount() {
+export default function Modal({ onClose, children }) {
+  useEffect(() => {
     console.log('Модaльное окно зарендерилось');
-    window.addEventListener('keydown', this.escCloseHandler);
-  }
+    window.addEventListener('keydown', escCloseHandler);
 
-  componentWillUnmount() {
-    console.log('Модальное окно размонтировано');
-    window.removeEventListener('keydown', this.escCloseHandler);
-  }
+    return () => {
+      window.removeEventListener('keydown', escCloseHandler);
+      console.log('Модальное окно закрылось');
+    };
+  }, []);
 
-  escCloseHandler = event => {
+  const escCloseHandler = event => {
     if (event.code === 'Escape') {
-      this.props.onClose(event);
+      onClose(event);
     }
   };
 
-  backdropClickHandler = event => {
+  const backdropClickHandler = event => {
     if (event.target === event.currentTarget) {
-      this.props.onClose(event);
+      onClose(event);
     }
     return;
   };
 
-  render() {
-    return createPortal(
-      <Overlay onClick={this.backdropClickHandler}>
-        <ModalContent>{this.props.children}</ModalContent>
-      </Overlay>,
-      modalRoot
-    );
-  }
+  return createPortal(
+    <Overlay onClick={backdropClickHandler}>
+      <ModalContent>{children}</ModalContent>
+    </Overlay>,
+    modalRoot
+  );
 }
