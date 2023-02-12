@@ -44,7 +44,7 @@ export default function App() {
           console.log(data);
           console.log(data.hits);
           console.log(page);
-          setGallery([...gallery, ...data.hits]);
+          setGallery(prevGallery =>[...prevGallery, ...data.hits]);
           setShowLoadMoreButton(page < Math.ceil(data.totalHits / 12));
         })
         .catch(error => {

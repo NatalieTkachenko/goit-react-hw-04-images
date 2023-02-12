@@ -13,7 +13,7 @@ export default function Modal({ onClose, children }) {
       window.removeEventListener('keydown', escCloseHandler);
       console.log('Модальное окно закрылось');
     };
-  }, []);
+  });
 
   const escCloseHandler = event => {
     if (event.code === 'Escape') {
