@@ -10,8 +10,6 @@ import { Box } from './App.styled.jsx';
 const API_KEY = '30786866-3f5d93462a7f9cfec75d687d6';
 const BASE_URL = 'https://pixabay.com/api/?';
 
-
-
 export default function App() {
   const [request, setRequest] = useState('');
   const [gallery, setGallery] = useState([]);
@@ -44,7 +42,7 @@ export default function App() {
           console.log(data);
           console.log(data.hits);
           console.log(page);
-          setGallery(prevGallery =>[...prevGallery, ...data.hits]);
+          setGallery(prevGallery => [...prevGallery, ...data.hits]);
           setShowLoadMoreButton(page < Math.ceil(data.totalHits / 12));
         })
         .catch(error => {
