@@ -28,7 +28,7 @@ export default function App() {
     }
     setLoading(true);
 
-    setTimeout(() => {
+    
       fetch(
         `${BASE_URL}q=${request}&key=${API_KEY}&image_type=photo&orientation=horizontal&page=${page}&per_page=12`
       )
@@ -49,7 +49,7 @@ export default function App() {
           console.log('error');
         })
         .finally(() => setLoading(false));
-    }, 500);
+    
   }, [request, page]);
 
   const submittedSearchHandler = query => {
